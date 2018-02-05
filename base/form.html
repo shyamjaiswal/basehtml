@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Form</title>
+    <meta name="viewport" content="width=content-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <style>
+        form {
+            background: blue;
+            max-width: 450px;
+            margin: 0 auto;
+            padding: 25px;
+        }
+
+        .form-item {
+            margin-top: 10px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 200px;
+            height: 45px;
+            border: 0;
+            outline: 0;
+            padding: 0 10px;
+        }
+
+        ::-webkit-input-placeholder {
+            /* Chrome/Opera/Safari */
+            color: pink;
+        }
+
+        ::-moz-placeholder {
+            /* Firefox 19+ */
+            color: pink;
+        }
+
+        :-ms-input-placeholder {
+            /* IE 10+ */
+            color: pink;
+        }
+
+        :-moz-placeholder {
+            /* Firefox 18- */
+            color: pink;
+        }
+
+        .form-item {
+            position: relative;
+        }
+
+        .form-item .error {
+            /* position: absolute; */
+        }
+    </style>
+</head>
+<form id="commentForm" method="post" action="#">
+    <div class="form-item">
+        <label>First Name: </label>
+        <input type="text" name="firstname" placeholder="form-itemFirst Name" required>
+    </div>
+    <div class="form-item">
+        <label>Last Name: </label>
+        <input type="text" name="lastname" placeholder="Last Name" required>
+    </div>
+    <div class="form-item" required>
+        <select id="speed">
+            <option>Value1</option>
+            <option>Value2</option>
+            <option>Value3</option>
+            <option>Value4</option>
+            <option>Value5</option>
+        </select>
+    </div>
+    <div class="form-item" required>
+        Gender
+        <input type="radio" id="male" name="gender">
+        <label for="male">Male</label>
+        <input type="radio" id="female" name="gender">
+        <label for="female">Female</label>
+    </div>
+    <div class="form-item">
+        DOB
+        <input type="text" id="datepicker" placeholder="input date" name="dob">
+    </div>
+    <div class="form-item">
+        <input type="text" placeholder="E-mail" name="mail">
+    </div>
+    <div class="form-item">
+        <input type="submit" value="Submit">
+    </div>
+</form>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="js/jquery.validate.js"></script>
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+        $("#speed").selectmenu();
+        // $("#commentForm").validate();
+        $("#commentForm").validate({
+            rules: {
+                // simple rule, converted to {required:true}
+                dob: "required",
+                // compound rule
+                mail: {
+                    required: true,
+                    email: true
+                }
+            }
+        });
+    });  
+</script>
+
+</html>
