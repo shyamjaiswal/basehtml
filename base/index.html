@@ -11,7 +11,10 @@
         <div class="wrap">
             <a href="#"alt="logo"><img src="images/logo.jpg"></a>
             <nav class="navigation">
-                <ul>
+                <div class="toggle">
+                    <span class="line"></span>
+                </div>
+                <ul class="menu">
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a>
@@ -109,25 +112,26 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
 <script>
-    $(window).on('load resize', function(){    
+    $(window).on('load resize', function(){   
+        
       var ww = $('body').width();
        if(ww <= 767){
-        $("body").addClass("trigger");
-      }else(
-        $("body").removeClass("trigger")
-      )
-      if(!$(".navigation .child-trigger").length){
+        $('.navigation').find('ul').slideUp(); 
+        if(!$(".navigation .child-trigger").length){
         $(".navigation ul li").has( "ul" ).closest("li").find("a").prepend("<span class='child-trigger'></span>");
       }
+      }else{
+        $(".navigation ul li").find('span.child-trigger').remove();
+      }        
       
-/*       if($(".navigation ul li").has( "ul" )){
-          $(".navigation ul li").addClass('hi');
-      } */
-      var elm = $('.navigation ul li a');
-    if($(elm).closest("li").children("ul").length){
-        $(this).addClass('hi');
-      } 
-    });
+      $(".child-trigger").click(function(){
+          $(this).parent('a').next("ul").slideToggle();
+      });
+
+    $('.toggle').click(function(){
+		$(this).next('ul').slideToggle();
+    }); 
+});
   </script>
 </body>
 </html>

@@ -2,7 +2,11 @@
 @font-face {
   font-family: 'FontAwesome';
   src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
-  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+  src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), 
+  url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), 
+  url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), 
+  url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), 
+  url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -29,6 +33,7 @@ form{
 
 /* Start main navigation*/
 .navigation{background: red; display: inline-block; width: 100%;}
+.navigation ul{display: block;}
 .navigation ul li{position: relative; top: 0; left: 0; float: left; width: 150px;}
 .navigation ul li:hover ul{display: block;}
 .navigation ul li ul{position: absolute; top: 18px; left: 0; border-left: 1px solid #000; border-right: 1px solid #000; background: yellow; display: none;}
@@ -81,10 +86,62 @@ main .sidebar{float: right; width: 30%;}
 .social-icons a.fb:after{
             content: "\f09a";
 }
+.toggle{display: none;}
 /*End Social icons styling*/
+@media(min-width: 768px){    
+    .navigation ul.menu {
+        display: block !important;
+    }    
+}
 @media (max-width: 767px) {
     main .content{width: 100%;}
-    main .sidebar{width: 100%;}  
+    main .sidebar{width: 100%;} 
+    .navigation ul li{float: none;} 
+    .toggle{
+        position: relative;
+        background: #000;
+        width: 22px;
+        float: right;
+        display: block;
+        padding: 8px 5px;
+        text-align: center;
+        cursor: pointer;
+        top: -16px;
+    }
+    .toggle .line{
+        width: 22px;
+        height: 2px;
+        background: #fff;
+        position: absolute;
+        top: 2px;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+    .toggle .line:before{
+        content: "";
+        width: 22px;
+        height: 2px;
+        background: #fff;
+        position: absolute;
+        top: 8px;
+        left: 0;
+    }
+    .toggle .line:after{
+        content: "";
+        width: 22px;
+        height: 2px;
+        background: #fff;
+        position: absolute;
+        top: 4px;
+        left: 0;
+    }
+    .child-trigger{
+        width: 20px;
+        height: 20px;
+        background: green;
+        display: inline-block;
+    }
 }
 
 
