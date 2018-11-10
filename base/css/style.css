@@ -14,6 +14,7 @@
 *{
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 header, section, footer, aside, nav, main, article, figure {
     display: block; 
@@ -32,13 +33,19 @@ form{
 }
 
 /* Start main navigation*/
-.navigation{background: red; display: inline-block; width: 100%;}
-.navigation ul{display: block;}
+.navigation{background: red; display: inline-block; width: 100%; vertical-align: top; position: relative; z-index: 99;}
+.navigation ul{display: block; width: 100%;}
 .navigation ul li{position: relative; top: 0; left: 0; float: left; width: 150px;}
 .navigation ul li:hover ul{display: block;}
-.navigation ul li ul{position: absolute; top: 18px; left: 0; border-left: 1px solid #000; border-right: 1px solid #000; background: yellow; display: none;}
+.navigation ul li ul{position: absolute; top: 18px; left: 0; border-left: 1px solid #000; border-right: 1px solid #000; background: yellow; display: none; width: 100%;}
 .navigation ul li ul li{border-bottom: 1px solid #000;}
-.navigation ul li a{color: #fff;}
+.navigation ul li a{
+    color: #fff;
+    padding: 5px;
+    display: inline-block;
+    vertical-align: text-bottom;
+    text-decoration: none;
+    }
 /* End main navigation */
 
 
@@ -90,13 +97,13 @@ main .sidebar{float: right; width: 30%;}
 /*End Social icons styling*/
 @media(min-width: 768px){    
     .navigation ul.menu {
-        display: block !important;
+        display: block !important;        
     }    
 }
 @media (max-width: 767px) {
     main .content{width: 100%;}
     main .sidebar{width: 100%;} 
-    .navigation ul li{float: none;} 
+    .navigation ul li{float: none; width: 100%;} 
     .toggle{
         position: relative;
         background: #000;
@@ -139,8 +146,34 @@ main .sidebar{float: right; width: 30%;}
     .child-trigger{
         width: 20px;
         height: 20px;
-        background: green;
         display: inline-block;
+        right: 0;
+        position: absolute;
+    }
+    .child-trigger:after{
+        content: "";
+        width: 17px;
+        height: 3px;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        background: #000;
+        position: absolute;
+    }
+    .child-trigger:before{
+        content: "";
+        width: 17px;
+        height: 3px;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        background: #000;
+        position: absolute;
+        transform: rotate(90deg);
     }
 }
 

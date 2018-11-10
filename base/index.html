@@ -2,7 +2,8 @@
 <html>
 <head>
 <title>Basic html</title>
-<meta name="viewport" content="width=device-width" initial-scale="1.0">
+<meta name="viewport" content="width=device-width" initial-scale="1.0">    
+<link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" type="text/css" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css" type="text/css" >
 </head>
 <body>
@@ -21,7 +22,13 @@
                         <ul>
                             <li><a href="#">Link1</a></li>
                             <li><a href="#">Link2</a></li>
-                            <li><a href="#">Link3</a></li>
+                            <li><a href="#">Link3</a>
+                                <ul>
+                                    <li><a href="#">Link1</a></li>
+                                    <li><a href="#">Link2</a></li>
+                                    <li><a href="#">Link3</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -57,10 +64,13 @@
 </div>    
 </main>
 <footer>
-<!--Slider Code
 
-    <body>
-  <div class="slider">
+    
+</footer>
+
+<!--Slider Code -->
+
+<div class="slider">
     <div class="f">1sdflsdhfjklsd  ashsdfhsdfhsd fsdhf hdsf</div>
     <div class="f">1sdflsdhfjklsd  ashsdfhsdfhsd fsdhf hdsf</div>
     <div class="f">3</div>
@@ -68,70 +78,43 @@
     <div class="f">5</div>
     <div class="f">5</div>
   </div>
-  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" type="text/css" rel="stylesheet">
-  <script>
-    $(document).ready(function () {
-      $('.slider').slick({
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplaySpeed: 2000,
-        variableWidth: true,
-        responsive: [{
-          
-                breakpoint: 1024,
-                settings: {
-                  slidesToShow: 3,
-                  infinite: true,
-                  variableWidth: false,
-                }
-          
-              }, {
-          
-                breakpoint: 600,
-                settings: {
-                  slidesToShow: 2,
-                  dots: true,
-                  variableWidth: false
-                }
-          
-              }, {
-          
-                breakpoint: 300,
-                settings: "unslick" // destroys slick
-          
-              }]
-      });
-    });
-  </script>
-</body>
-
--->    
-</footer>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="js/responsive.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
 
 <script>
-    $(window).on('load resize', function(){   
-        
-      var ww = $('body').width();
-       if(ww <= 767){
-        $('.navigation').find('ul').slideUp(); 
-        if(!$(".navigation .child-trigger").length){
-        $(".navigation ul li").has( "ul" ).closest("li").find("a").prepend("<span class='child-trigger'></span>");
-      }
-      }else{
-        $(".navigation ul li").find('span.child-trigger').remove();
-      }        
+$(document).ready(function() {
+    $('.slider').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplaySpeed: 2000,
+    variableWidth: true,
+    responsive: [{
       
-      $(".child-trigger").click(function(){
-          $(this).parent('a').next("ul").slideToggle();
-      });
-
-    $('.toggle').click(function(){
-		$(this).next('ul').slideToggle();
-    }); 
+            breakpoint: 1024,
+            settings: {
+              slidesToShow: 3,
+              infinite: true,
+              variableWidth: false,
+            }
+      
+          }, {
+      
+            breakpoint: 600,
+            settings: {
+              slidesToShow: 2,
+              dots: true,
+              variableWidth: false
+            }
+      
+          }, {
+      
+            breakpoint: 300,
+            settings: "unslick" // destroys slick
+      
+          }]
+  });
 });
-  </script>
+</script>
 </body>
 </html>
