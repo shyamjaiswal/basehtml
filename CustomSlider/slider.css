@@ -1,0 +1,41 @@
+* {
+  box-sizing: border-box;
+}
+.custom-slider {
+  border: 1px solid red;
+  margin: 0 auto;
+  left: 0;
+}
+/* .slider-wrap { max-width: 400px;} */
+
+ul li:first-child .box {
+  margin-left: 0;
+}
+/*
+Slider CSS need to apply and modify as per requirement
+*/
+.custom-slider {
+  overflow: hidden;
+  max-width: 400px;
+}
+.slider-wrap {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0;
+  position: relative;
+  left: 0;
+  overflow: hidden;
+}
+.slide-item {
+  /* width: 200px; 
+  flex: 0 0 200px;
+  height: 125px; 
+  border: 1px solid #000; 
+  margin:10px 0; */
+  border: 1px solid #000;
+  flex: 0 0 auto;
+}
+.disable {
+  pointer-events: none;
+}
