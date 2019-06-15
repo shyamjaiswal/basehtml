@@ -10,3 +10,7 @@
 }
 .fancy-slider__nav {
 }
+
+.fancy-slider .disabled {
+  pointer-events: none;
+}
