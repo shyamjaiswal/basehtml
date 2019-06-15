@@ -1,0 +1,12 @@
+.fancy-slider {
+  position: relative;
+  overflow: hidden;
+}
+.fancy-slider__stage {
+  display: flex;
+}
+.fancy-slider__item {
+  flex: 0 0 auto;
+}
+.fancy-slider__nav {
+}

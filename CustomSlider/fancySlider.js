@@ -10,64 +10,144 @@
      */
     this.$element = $(element);
 
+    /**
+     * Proxied event handlers.
+     * @protected
+     */
+    this._handlers = {};
+
     this.prev = null;
     this.next = null;
 
-    this.sliderOrdinates = {
-      width: this.$element.outerWidth()
-    };
+    this.currentAnimate = 0;
+    this.totalChildItems = this.$element.children().length;
 
+    this.setOrdinates();
     this.init();
-    this.onEvent();
   }
 
   FancySlider.Defaults = {
-    items: 3
+    items: 3,
+    classes: {
+      slider: "fancy-slider",
+      stage: "fancy-slider__stage",
+      item: "fancy-slider__item",
+      nav: {
+        class: "fancy-slider__nav",
+        prev: "fancy-slider__nav-prev",
+        next: "fancy-slider__nav-next",
+        disabled: "disabled"
+      }
+    }
+  };
+
+  FancySlider.prototype.setOrdinates = function() {
+    var width = this.$element.outerWidth();
+    var itemWidth = width / this.options.items;
+    var totalWidth = itemWidth * this.totalChildItems;
+    var maxAllowedTransform = totalWidth - itemWidth * this.options.items;
+
+    this.sliderOrdinates = {
+      width: width,
+      itemWidth: itemWidth,
+      totalWidth: totalWidth,
+      maxAllowedTransform: maxAllowedTransform
+    };
   };
 
   FancySlider.prototype.init = function() {
-    this.$element.addClass("fancy-slider");
-    this.constructSlider();
-    console.log(this.sliderOrdinates);
+    this.$element.addClass(this.options.classes.slider);
+    this.$element
+      .find(".".concat(this.options.classes.item))
+      .wrapAll("<div class='" + this.options.classes.stage + "' />");
+
+    /**
+      Bind Events once slider is created
+     */
+    this.constructSlider($.proxy(this.bindEvents, this));
   };
 
-  FancySlider.prototype.constructSlider = function() {
+  FancySlider.prototype.constructSlider = function(callback) {
     if (!this.prev && !this.next) {
       this.$element.append(
-        '<span class="slider-nav"><span class="slider_prev slider-btn">prev</span><span class="slider_next slider-btn">next</span></span>'
+        '<div class="' +
+          this.options.classes.nav.class +
+          '"><span class="' +
+          this.options.classes.nav.prev +
+          '">Prev</span><span class="' +
+          this.options.classes.nav.next +
+          '">Next</span></div>'
       );
 
-      this.prev = this.$element.find(".slider-nav .slider_prev");
-      this.next = this.$element.find(".slider-nav .slider_next");
-
-      $(this.prev).on("click", this.onPrevClick);
-      $(this.next).on("click", this.onNextClick);
+      this.prev = this.$element.find(".".concat(this.options.classes.nav.prev));
+      this.next = this.$element.find(".".concat(this.options.classes.nav.next));
     }
 
-    var itemWidth = this.sliderOrdinates.width / this.options.items;
-
-    this.$element.find(".slide-item").width(itemWidth);
+    this.$element
+      .find(".".concat(this.options.classes.item))
+      .outerWidth(this.sliderOrdinates.itemWidth);
+    if (callback) {
+      callback();
+    }
+    this.checkNavigation();
   };
 
   FancySlider.prototype.resize = function() {
-    console.log(this.$element);
-    this.sliderOrdinates = {
-      width: this.$element.outerWidth()
-    };
+    this.currentAnimate = 0;
     this.constructSlider();
+    this.setOrdinates();
+    this.animateSlider();
   };
 
   FancySlider.prototype.onPrevClick = function(e) {
-    console.log("prev clicked", e);
+    if (this.currentAnimate >= this.sliderOrdinates.itemWidth) {
+      this.currentAnimate -= this.sliderOrdinates.itemWidth;
+    }
+
+    this.checkNavigation();
+    this.animateSlider();
   };
 
   FancySlider.prototype.onNextClick = function(e) {
-    console.log("next clicked", e);
+    if (this.currentAnimate < this.sliderOrdinates.maxAllowedTransform) {
+      this.currentAnimate += this.sliderOrdinates.itemWidth;
+    }
+    this.checkNavigation();
+    this.animateSlider();
   };
 
-  FancySlider.prototype.onEvent = function() {
-    //this.on(window, "resize", this.resize);
-    $(window).resize(() => this.resize());
+  FancySlider.prototype.animateSlider = function() {
+    this.$element
+      .find(".".concat(this.options.classes.stage))
+      .animate({ "margin-left": -this.currentAnimate }, "linear");
+  };
+
+  FancySlider.prototype.checkNavigation = function() {
+    if (this.currentAnimate <= this.sliderOrdinates.itemWidth) {
+      this.$element
+        .find(".".concat(this.options.classes.nav.prev))
+        .addClass("disabled");
+    } else {
+      this.$element
+        .find(".".concat(this.options.classes.nav.prev))
+        .removeClass("disabled");
+    }
+
+    if (this.currentAnimate >= this.sliderOrdinates.maxAllowedTransform) {
+      this.$element
+        .find(".".concat(this.options.classes.nav.next))
+        .addClass("disabled");
+    } else {
+      this.$element
+        .find(".".concat(this.options.classes.nav.next))
+        .removeClass("disabled");
+    }
+  };
+
+  FancySlider.prototype.bindEvents = function() {
+    $(window).resize($.proxy(this.resize, this));
+    $(this.prev).on("click", $.proxy(this.onPrevClick, this));
+    $(this.next).on("click", $.proxy(this.onNextClick, this));
   };
 
   $.fn.fancySlider = function(option) {

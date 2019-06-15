@@ -1,3 +1,5 @@
-$('#slider1').fancySlider();
+$("#slider-hero").fancySlider({ items: 1 });
 
-$('#slider2').fancySlider({items: 2});
+$("#slider-full").fancySlider({ items: 2 });
+
+$("#slider-half").fancySlider({ items: 3.5 });
