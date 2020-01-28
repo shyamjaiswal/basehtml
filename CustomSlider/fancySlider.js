@@ -38,7 +38,8 @@
         next: "fancy-slider__nav-next",
         disabled: "disabled"
       }
-    }
+    },
+    animation: "linear"
   };
 
   FancySlider.prototype.setOrdinates = function() {
@@ -100,8 +101,14 @@
   };
 
   FancySlider.prototype.onPrevClick = function(e) {
+    var spaceForPrevSlide =
+      this.currentAnimate - this.sliderOrdinates.itemWidth >=
+      this.sliderOrdinates.itemWidth;
+
     if (this.currentAnimate >= this.sliderOrdinates.itemWidth) {
       this.currentAnimate -= this.sliderOrdinates.itemWidth;
+    } else {
+      this.currentAnimate = 0;
     }
 
     this.checkNavigation();
@@ -109,8 +116,14 @@
   };
 
   FancySlider.prototype.onNextClick = function(e) {
-    if (this.currentAnimate < this.sliderOrdinates.maxAllowedTransform) {
+    var spaceForNextSlide =
+      this.currentAnimate + this.sliderOrdinates.itemWidth <=
+      this.sliderOrdinates.maxAllowedTransform;
+
+    if (spaceForNextSlide) {
       this.currentAnimate += this.sliderOrdinates.itemWidth;
+    } else {
+      this.currentAnimate = this.sliderOrdinates.maxAllowedTransform;
     }
     this.checkNavigation();
     this.animateSlider();
@@ -119,7 +132,7 @@
   FancySlider.prototype.animateSlider = function() {
     this.$element
       .find(".".concat(this.options.classes.stage))
-      .animate({ "margin-left": -this.currentAnimate }, "linear");
+      .animate({ "margin-left": -this.currentAnimate }, this.options.animation);
   };
 
   FancySlider.prototype.checkNavigation = function() {
